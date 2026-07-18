@@ -260,20 +260,21 @@ footer{border-top:1px solid var(--line);padding:40px 0 60px;margin-top:30px;font
   <h2>Simple, honest pricing.</h2>
   <p class="lead">The settlement plan is typically reimbursable from the estate as an administration expense.</p>
   <div class="prices">
-    <div class="price"><div class="eyebrow">Free</div><div class="amt">$0</div><div class="per">forever</div>
-      <ul><li>The guided roadmap for the first 72 hours</li><li>One estate, two family members</li><li>Memorial page & funeral tools</li><li>A first conversation with the guide</li></ul>
+    <div class="price"><div class="eyebrow">Free</div><div class="amt" data-price="free">$0</div><div class="per" data-price-per="free">forever</div>
+      <ul><li>The guided roadmap for the first 72 hours</li><li>One estate, two family members</li><li><span data-vault-docs="free">5</span> documents in your vault</li><li>Memorial page &amp; funeral tools</li><li>A first conversation with the guide</li></ul>
       <a class="btn btn-ghost" href="https://app.homegoinghq.com?brand=homegoing">Start free</a></div>
-    <div class="price"><div class="eyebrow">Companion</div><div class="amt">$149</div><div class="per">once, per estate</div>
-      <ul><li>The full roadmap, every phase</li><li>30 guide conversations</li><li>10 documents & 10 ledger entries</li><li>Bank & insurer letter templates</li></ul>
+    <div class="price"><div class="eyebrow">Companion</div><div class="amt" data-price="companion">$149</div><div class="per" data-price-per="companion">once, per estate</div>
+      <ul><li>The full roadmap, every phase</li><li>30 guide conversations</li><li><span data-vault-docs="companion">10</span> documents in your vault &middot; 10 ledger entries</li><li>Bank &amp; insurer letter templates</li></ul>
       <a class="btn btn-ghost" href="https://app.homegoinghq.com?brand=homegoing">Get Companion</a></div>
-    <div class="price hot"><div class="eyebrow" >Settle · <span style="color:var(--brass,#8F6A24)">best value</span></div><div class="amt">$249</div><div class="per">once, per estate</div>
-      <ul><li><strong>Everything unlimited</strong> — documents, ledger & guide</li><li>Court-ready inventory & accounting reports</li><li>Bank import · claim tracker · every template</li><li>Unlimited family members & sealed recordings</li></ul>
+    <div class="price hot"><div class="eyebrow" >Settle · <span style="color:var(--brass,#8F6A24)">best value</span></div><div class="amt" data-price="settle">$249</div><div class="per" data-price-per="settle">once, per estate</div>
+      <ul><li><strong>Unlimited ledger &amp; guide</strong> — every tool, every phase</li><li><span data-vault-docs="settle">20</span> documents in your vault</li><li>Court-ready inventory &amp; accounting reports</li><li>Bank import · claim tracker · every template</li><li>Unlimited family members &amp; sealed recordings</li></ul>
       <a class="btn btn-ink" href="https://app.homegoinghq.com?brand=homegoing">Unlock Settle</a></div>
-    <div class="price"><div class="eyebrow">The Gift</div><div class="amt">$249</div><div class="per">for a family you love</div>
+    <div class="price"><div class="eyebrow">The Gift</div><div class="amt" data-price="gift">$249</div><div class="per" data-price-per="gift">for a family you love</div>
       <ul><li>Everything in Settle</li><li>Delivered by email with your message</li><li>For the price of flowers — but it helps for a year</li>
         <li>A gift code they redeem whenever they're ready</li></ul>
       <a class="btn btn-ghost" href="https://app.homegoinghq.com?brand=homegoing#gift">Give the gift</a></div>
   </div>
+  <p class="lead" style="margin-top:20px;font-size:15px">Keep documents longer? <strong>Vault Keeper</strong> adds ongoing encrypted storage for <span data-vault-price>$8</span>/month once you reach your plan's included documents — cancel anytime.</p>
 </div></section>
 
 <section style="padding-top:10px"><div class="wrap" style="max-width:760px">
@@ -316,5 +317,22 @@ footer{border-top:1px solid var(--line);padding:40px 0 60px;margin-top:30px;font
 document.querySelectorAll('.nav-links a').forEach(function(a){
   a.addEventListener('click',function(){var t=document.getElementById('navToggle');if(t)t.checked=false;});
 });
+</script>
+<script>
+/* Pricing is driven by the shared source of truth at app.homegoinghq.com/pricing.json.
+   The values baked into the cards above are fallbacks — if the fetch fails, prices
+   still render correctly. Change pricing in one place (that file) and this page and
+   the app both update on next load. */
+(function(){
+  function apply(P){
+    if(!P||!P.tiers) return;
+    document.querySelectorAll("[data-price]").forEach(function(el){var t=P.tiers[el.getAttribute("data-price")]; if(t&&t.price) el.textContent=t.price;});
+    document.querySelectorAll("[data-price-per]").forEach(function(el){var t=P.tiers[el.getAttribute("data-price-per")]; if(t&&t.per) el.textContent=t.per;});
+    document.querySelectorAll("[data-vault-docs]").forEach(function(el){var t=P.tiers[el.getAttribute("data-vault-docs")]; if(t&&t.vaultDocs!=null) el.textContent=t.vaultDocs;});
+    document.querySelectorAll("[data-vault-price]").forEach(function(el){ if(P.vault&&P.vault.price) el.textContent=P.vault.price;});
+  }
+  fetch("https://app.homegoinghq.com/pricing.json",{cache:"no-store"})
+    .then(function(r){return r.ok?r.json():null;}).then(apply).catch(function(){});
+})();
 </script>
 </body></html>
