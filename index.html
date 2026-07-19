@@ -85,6 +85,7 @@ h2{font-family:"Fraunces",serif;font-weight:500;font-size:clamp(26px,3.5vw,34px)
 .price.hot{border:2px solid var(--accent2)}
 .price .amt{font-family:"Fraunces",serif;font-size:34px;font-weight:600;margin:6px 0 2px}
 .price .per{font-size:13px;color:var(--muted)}
+.price .intro{font-size:11px;color:#75561D;font-weight:700;letter-spacing:.02em;margin-top:3px}
 .price ul{list-style:none;margin-top:14px}
 .price li{font-size:14px;padding:5px 0 5px 20px;position:relative;color:var(--muted)}
 .price li:before{content:"\2713";position:absolute;left:0;color:var(--accent2);font-weight:700}
@@ -263,10 +264,10 @@ footer{border-top:1px solid var(--line);padding:40px 0 60px;margin-top:30px;font
     <div class="price"><div class="eyebrow">Free</div><div class="amt" data-price="free">$0</div><div class="per" data-price-per="free">forever</div>
       <ul><li>The guided roadmap on what to do after a loss</li><li>One estate, two family members</li><li><span data-vault-docs="free">5</span> documents in your vault</li><li>Memorial page &amp; funeral tools</li><li>A first conversation with the guide</li></ul>
       <a class="btn btn-ghost" href="https://app.homegoinghq.com?brand=homegoing">Start free</a></div>
-    <div class="price"><div class="eyebrow">Companion</div><div class="amt" data-price="companion">$149</div><div class="per" data-price-per="companion">once, per estate</div>
+    <div class="price"><div class="eyebrow">Companion</div><div class="amt" data-price="companion">$149</div><div class="per" data-price-per="companion">once, per estate</div><div class="intro" data-price-intro="companion">✦ Limited-time introductory pricing</div>
       <ul><li>The full roadmap, every phase</li><li>30 guide conversations</li><li><span data-vault-docs="companion">10</span> documents in your vault &middot; 10 ledger entries</li><li>Bank &amp; insurer letter templates</li></ul>
       <a class="btn btn-ghost" href="https://app.homegoinghq.com?brand=homegoing">Get Companion</a></div>
-    <div class="price hot"><div class="eyebrow" >Settle · <span style="color:#75561D">best value</span></div><div class="amt" data-price="settle">$249</div><div class="per" data-price-per="settle">once, per estate</div>
+    <div class="price hot"><div class="eyebrow" >Settle · <span style="color:#75561D">best value</span></div><div class="amt" data-price="settle">$249</div><div class="per" data-price-per="settle">once, per estate</div><div class="intro" data-price-intro="settle">✦ Limited-time introductory pricing</div>
       <ul><li><strong>Unlimited ledger &amp; guide</strong> — every tool, every phase</li><li><span data-vault-docs="settle">20</span> documents in your vault</li><li>Court-ready inventory &amp; accounting reports</li><li>Bank import · claim tracker · every template</li><li>Unlimited family members &amp; sealed recordings</li></ul>
       <a class="btn btn-ink" href="https://app.homegoinghq.com?brand=homegoing">Unlock Settle</a></div>
     <div class="price"><div class="eyebrow">The Gift</div><div class="amt" data-price="gift">$249</div><div class="per" data-price-per="gift">for a family you love</div>
@@ -328,6 +329,7 @@ document.querySelectorAll('.nav-links a').forEach(function(a){
     if(!P||!P.tiers) return;
     document.querySelectorAll("[data-price]").forEach(function(el){var t=P.tiers[el.getAttribute("data-price")]; if(t&&t.price) el.textContent=t.price;});
     document.querySelectorAll("[data-price-per]").forEach(function(el){var t=P.tiers[el.getAttribute("data-price-per")]; if(t&&t.per) el.textContent=t.per;});
+    document.querySelectorAll("[data-price-intro]").forEach(function(el){var t=P.tiers[el.getAttribute("data-price-intro")]; if(t&&t.intro) el.textContent=t.intro;});
     document.querySelectorAll("[data-vault-docs]").forEach(function(el){var t=P.tiers[el.getAttribute("data-vault-docs")]; if(t&&t.vaultDocs!=null) el.textContent=t.vaultDocs;});
     document.querySelectorAll("[data-vault-price]").forEach(function(el){ if(P.vault&&P.vault.price) el.textContent=P.vault.price;});
   }
